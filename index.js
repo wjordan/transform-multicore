@@ -9,6 +9,10 @@ module.exports = function (moduleName, options) {
   var concurrency = options.concurrency || require('os').cpus().length;
 
   function process(data, callback) {
+    var inputData = data;
+    if(typeof options.input == 'function') {
+      inputData = options.input(data);
+    }
     if (!format) {
       var temp = require('temp').openSync();
       var fs = require('fs');
@@ -18,8 +22,11 @@ module.exports = function (moduleName, options) {
         format.fork();
       }
     }
-    format(data).then(function (data) {
-      return callback(null, data);
+    format(inputData).then(function (outputData) {
+      if(typeof options.output == 'function') {
+        outputData = options.output(data, inputData, outputData);
+      }
+      return callback(null, outputData);
     });
   }
 
