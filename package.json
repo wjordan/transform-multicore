@@ -15,5 +15,9 @@
   "author": "Will Jordan <will@code.org>",
   "license": "Apache License, Version 2.0",
   "dependencies": {
+    "bluebird": "^2.6.2",
+    "parallel-transform": "^0.2.2",
+    "slave": "^1.2.2",
+    "temp": "^0.8.1"
   }
 }
